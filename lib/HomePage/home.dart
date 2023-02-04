@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 enum _ManuValue {
   NewGroup,
   NewBroadcast,
@@ -22,98 +23,185 @@ enum _ManuValue {
   Payments,
   Settings
 }
-class _HomePageState extends State<HomePage> {
-  File? _Image;
-  Future getImage() async{
-    final img = ImagePicker().pickImage(source: ImageSource.camera);
-    if (img == null) return;
-    // final FinalImage = File(img.path);
 
-  }
-  bool isBool = true;
+class _HomePageState extends State<HomePage> {
+  bool _showSearch = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double yourWidth = width  / 5;
+    double yourWidth = width / 5;
     return DefaultTabController(
-      length: 4,
       initialIndex: 1,
+      length: 4,
       child: Scaffold(
-        appBar: isBool? AppBar(
-          backgroundColor: MainColor,
-          title: Text(
-            'WhatsApp',
-            style: TextStyle(color: FontColor),
-          ),
-          actions: [
-            const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: InkWell(child: Icon(Icons.camera_alt_outlined),),
-            ),
-            const Icon(Icons.search),
-            PopupMenuButton<_ManuValue>(
-                itemBuilder: (context) => [
-                      const PopupMenuItem(value: _ManuValue.NewGroup,child: Text('New Group'),),
-                      const PopupMenuItem(value: _ManuValue.NewBroadcast,child: Text('New broadcast'),),
-                      const PopupMenuItem(value: _ManuValue.LinkedDevices,child: Text('Linked devices'),),
-                      const PopupMenuItem(value: _ManuValue.StarredMesseages,child: Text('Starred messages'),),
-                      const PopupMenuItem(value: _ManuValue.Payments,child: Text('Payments'),),
-                      const PopupMenuItem(value: _ManuValue.Settings,child: Text('Settings'),)
+        appBar: PreferredSize(
+          preferredSize: Size(double.infinity, _showSearch ? 200 : 105),
+          child: AppBar(
+
+            toolbarHeight: 200,
+            title: _showSearch
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            prefixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _showSearch = false;
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.grey,
+                                )),
+                            hintText: 'Search....',
+                            border:
+                                OutlineInputBorder(borderSide: BorderSide.none),
+                            hintStyle: TextStyle(color: Colors.grey)),
+                        cursorColor: Colors.grey,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Wrap(
+                          runSpacing: 10,
+                          spacing: 10,
+                          children: [
+                            searchitems(90, Icons.mark_chat_unread, 'Unread'),
+                            searchitems(90, Icons.photo, 'Photos'),
+                            searchitems(90, Icons.videocam, 'Videos'),
+                            searchitems(85, Icons.link, 'Links'),
+                            searchitems(70, Icons.gif_outlined, 'GIFs'),
+                            searchitems(80, Icons.audiotrack, 'Audio'),
+                            searchitems(
+                                110, Icons.document_scanner, 'Documents'),
+                            searchitems(80, Icons.poll, 'Polls'),
+                          ],
+                        ),
+                      ),
                     ],
-            onSelected: (value) {
-             switch (value){
-               case _ManuValue.NewGroup:
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const Settings()));
-                 break;
-               case _ManuValue.NewBroadcast:
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const Settings()));
-                 break;
-               case _ManuValue.LinkedDevices:
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const Settings()));
-                 break;
-               case _ManuValue.StarredMesseages:
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const Settings()));
-                 break;
-               case _ManuValue.Payments:
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const Settings()));
-                 break;
-               case _ManuValue.Settings:
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=>const Settings()));
-                 break;
-             }
-            },)
-          ],
-          bottom: TabBar(
-            indicatorColor: Colors.white,
-            isScrollable: true,
-            tabs:  [
-              Container(
-                width: 25,
-                height: 50,
-                alignment: Alignment.center,
-                child: const Icon(
-                  Icons.groups,
+                  )
+                : Text('Whatsapp'),
+            actions: _showSearch
+                ? []
+                : [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 20),
+                      child: InkWell(
+                        child: Icon(Icons.camera_alt_outlined),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showSearch = true;
+                          });
+                        },
+                        icon: Icon(Icons.search)),
+                    PopupMenuButton<_ManuValue>(
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: _ManuValue.NewGroup,
+                          child: Text('New Group'),
+                        ),
+                        const PopupMenuItem(
+                          value: _ManuValue.NewBroadcast,
+                          child: Text('New broadcast'),
+                        ),
+                        const PopupMenuItem(
+                          value: _ManuValue.LinkedDevices,
+                          child: Text('Linked devices'),
+                        ),
+                        const PopupMenuItem(
+                          value: _ManuValue.StarredMesseages,
+                          child: Text('Starred messages'),
+                        ),
+                        const PopupMenuItem(
+                          value: _ManuValue.Payments,
+                          child: Text('Payments'),
+                        ),
+                        const PopupMenuItem(
+                          value: _ManuValue.Settings,
+                          child: Text('Settings'),
+                        )
+                      ],
+                      onSelected: (value) {
+                        switch (value) {
+                          case _ManuValue.NewGroup:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Settings()));
+                            break;
+                          case _ManuValue.NewBroadcast:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Settings()));
+                            break;
+                          case _ManuValue.LinkedDevices:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Settings()));
+                            break;
+                          case _ManuValue.StarredMesseages:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Settings()));
+                            break;
+                          case _ManuValue.Payments:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Settings()));
+                            break;
+                          case _ManuValue.Settings:
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Settings()));
+                            break;
+                        }
+                      },
+                    )
+                  ],
+            backgroundColor: _showSearch ? Colors.white : MainColor,
+            bottom: _showSearch ? null: TabBar(
+              indicatorColor: Colors.white,
+              isScrollable: true,
+              tabs: [
+                Container(
+                  width: 25,
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.groups,
+                  ),
                 ),
-              ),
-              Container(
-                  width: yourWidth,
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: const Text("Chats")),
-              Container(
-                  width: yourWidth,
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: const Text("Status")),
-              Container(
-                  width: yourWidth,
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: const Text("Calls"))
-            ],
+                Container(
+                    width: yourWidth,
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: const Text("Chats")),
+                Container(
+                    width: yourWidth,
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: const Text("Status")),
+                Container(
+                    width: yourWidth,
+                    height: 50,
+                    alignment: Alignment.center,
+                    child: const Text("Calls"))
+              ],
+            ) ,
           ),
-        ):PreferredSize(child: AppBar(), preferredSize: Size(double.infinity,200)),
-        body: const TabBarView(
+        ),
+        body: TabBarView(
           children: [
             Communities(),
             Chat(),
@@ -121,7 +209,38 @@ class _HomePageState extends State<HomePage> {
             Calls(),
           ],
         ),
+      ),
+    );
+  }
 
+  Container searchitems(double width, Widget, String name) {
+    return Container(
+      height: 30,
+      width: width,
+      decoration: BoxDecoration(
+          color: Colors.black12, borderRadius: BorderRadius.circular(50)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Widget,
+              color: Color(0xf5464b4f),
+              size: 18,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              '$name',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[700],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
