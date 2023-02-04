@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../Calls/Calls.dart';
@@ -37,7 +39,6 @@ class _HomePageState extends State<HomePage> {
         appBar: PreferredSize(
           preferredSize: Size(double.infinity, _showSearch ? 200 : 105),
           child: AppBar(
-
             toolbarHeight: 200,
             title: _showSearch
                 ? Column(
@@ -59,8 +60,8 @@ class _HomePageState extends State<HomePage> {
                                 )),
                             hintText: 'Search....',
                             border:
-                                OutlineInputBorder(borderSide: BorderSide.none),
-                            hintStyle: TextStyle(color: Colors.grey)),
+                                const OutlineInputBorder(borderSide: BorderSide.none),
+                            hintStyle: const TextStyle(color: Colors.grey)),
                         cursorColor: Colors.grey,
                       ),
                       Padding(
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   )
-                : Text('Whatsapp'),
+                : const Text('Whatsapp'),
             actions: _showSearch
                 ? []
                 : [
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                             _showSearch = true;
                           });
                         },
-                        icon: Icon(Icons.search)),
+                        icon: const Icon(Icons.search)),
                     PopupMenuButton<_ManuValue>(
                       itemBuilder: (context) => [
                         const PopupMenuItem(
@@ -133,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Settings()));
+                                    builder: (context) => const Settings()));
                             break;
                           case _ManuValue.NewBroadcast:
                             Navigator.push(
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> {
             ) ,
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             Communities(),
             Chat(),
@@ -226,10 +227,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             Icon(
               Widget,
-              color: Color(0xf5464b4f),
+              color: const Color(0xf5464b4f),
               size: 18,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
