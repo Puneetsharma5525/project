@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     // final FinalImage = File(img.path);
 
   }
-  
+  bool isBool = true;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       length: 4,
       initialIndex: 1,
       child: Scaffold(
-        appBar: AppBar(
+        appBar: isBool? AppBar(
           backgroundColor: MainColor,
           title: Text(
             'WhatsApp',
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                   child: const Text("Calls"))
             ],
           ),
-        ),
+        ):PreferredSize(child: AppBar(), preferredSize: Size(double.infinity,200)),
         body: const TabBarView(
           children: [
             Communities(),
