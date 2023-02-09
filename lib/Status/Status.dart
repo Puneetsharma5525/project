@@ -27,10 +27,23 @@ class _StatusState extends State<Status> {
 
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.camera_alt),
-        backgroundColor: MainColor,
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: (){},
+            child: Icon(Icons.edit,color: Colors.black,),
+            backgroundColor: Color(0xffcecaca),
+
+          ),
+          SizedBox(height: 10,),
+          FloatingActionButton(
+            onPressed: (){},
+            child: Icon(Icons.camera_alt),
+            backgroundColor: MainColor,
+          ),
+        ],
       ),
     );
   }

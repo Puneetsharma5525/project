@@ -6,7 +6,6 @@ import 'about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
-
   @override
   State<Profile> createState() => _ProfileState();
 }
@@ -88,7 +87,10 @@ class _ProfileState extends State<Profile> {
                   'Name',
                   style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
                 ),
-                subtitle: Text(
+                subtitle:
+
+
+                Text(
                   '$Name',
                   style: TextStyle(fontSize: 14, color: Colors.black),
                 ),
@@ -101,13 +103,13 @@ class _ProfileState extends State<Profile> {
                       controller: NameController,
                       decoration:
                       InputDecoration(hintText: 'Enter Your Name',
-                       ),validator: (value){
-                        if(value?.trim() == null){
-                          return "Your Filled is Empty";
-                        }
-                        if (value !=null&&value.length<3){
-                          return "Enter More characters";
-                        };
+                      ),validator: (value){
+                      if(value?.trim() == null){
+                        return "Your Filled is Empty";
+                      }
+                      if (value !=null&&value.length<3){
+                        return "Enter More characters";
+                      };
                     },
                     ),
                     actions: [
@@ -115,7 +117,6 @@ class _ProfileState extends State<Profile> {
                           onPressed: () => Navigator.pop(context),
                           child: Text('Cancel')),
                       TextButton(onPressed: () async{
-                        final isValidfrom = fromKey.currentState!;
                         var name = NameController.text.toString();
                         var pref = await SharedPreferences.getInstance();
                         pref.setString("name", name);

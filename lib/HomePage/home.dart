@@ -1,6 +1,3 @@
-// ignore_for_file: constant_identifier_names
-
-import 'dart:io';
 import 'package:flutter/material.dart';
 import '../Calls/Calls.dart';
 import '../Chats/Chat.dart';
@@ -8,8 +5,6 @@ import '../Settings/Settings.dart';
 import '../Status/Status.dart';
 import '../communities/communities.dart';
 import '../whatsapp color data/whatsappcolor.dart';
-import 'package:image_picker/image_picker.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -234,7 +229,7 @@ class _HomePageState extends State<HomePage> {
               width: 10,
             ),
             Text(
-              '$name',
+              name,
               style: TextStyle(
                 fontSize: 12,
                 color: Colors.grey[700],

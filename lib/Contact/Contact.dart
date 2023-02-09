@@ -1,15 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:project/api/fath.dart';
+import '../Settings/Profile/profile.dart';
 
 class Contact extends StatefulWidget {
   const Contact({Key? key}) : super(key: key);
   @override
   State<Contact> createState() => _ContactState();
 }
+
 class _ContactState extends State<Contact> {
+  List<SimpleData> Profiledata = [];
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: const Text('Select contact'),),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Select contact'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,15 +44,57 @@ class _ContactState extends State<Contact> {
             ),
             const Padding(
               padding: EdgeInsets.all(15),
-              child: Text('Contacts on WhatsApp',style: TextStyle(fontWeight: FontWeight.w500),),
+              child: Text(
+                'Contacts on WhatsApp',
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
             ),
-            for(int a =0; a<=10; a++)...[
-              ListTile(leading:  CircleAvatar(child: Icon(Icons.person,color: Colors.white,),backgroundColor: Colors.black12,),title: Text('Person$a'),subtitle: Text('Person$a'),),
-            ],
+            FutureBuilder(
+              future: getDate(),
+              builder: (context, snapshot) {
+              if(snapshot.hasData){
+                return
+                  Container(
+                    height: 500,
+                    child: ListView.builder(itemCount: Profiledata.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage('${Profiledata[index].url}'),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: Colors.black12,
+                          ),
+                          title: Text('${Profiledata[index].title}'),
+                          subtitle: Text('Person'),
+                        );
+                      },
+                    ),
+                  );
+              }
+              else{
+                return Center(child: CircularProgressIndicator());
+              }
+            },)
           ],
         ),
       ),
     );
   }
-}
 
+  Future<List<SimpleData>> getDate() async {
+    final response = await http
+        .get(Uri.parse('https://jsonplaceholder.typicode.com/photos'));
+    var data = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      for (Map<String, dynamic> index in data) {
+        Profiledata.add(SimpleData.fromJson(index));
+      }
+      return Profiledata;
+    } else {
+      return Profiledata;
+    }
+  }
+}

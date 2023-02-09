@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Contact/Contact.dart';
+import '../datafile.dart';
 import '../encrypted/encrypted.dart';
 import '../whatsapp color data/whatsappcolor.dart';
 import 'inbox.dart';
@@ -9,25 +10,28 @@ class Chat extends StatefulWidget {
   const Chat({Key? key}) : super(key: key);
 
   @override
-  State<Chat> createState() => _ChatState();
+  State<Chat> createState() => ChatState();
 }
 
-class _ChatState extends State<Chat> {
+class ChatState extends State<Chat> {
+  List<String>  name = ['Mukul Dixit','Mohanlal Master','Mohit Jatin','Ajay Gokhale','Mohan Sidhu','Kirti Nayar','raj kumar','ram singh','preetam kumar','kali charan','supriyal sen','pooran chand sharma','rajkumar chawla','mohd ataullah','md mustafa','dipendra kumar','akash gupta'];
+  List<String>  date = ['01/02/23','10/02/23','11/02/23','12/02/23','12/02/23','22/02/23','22/02/23','25/02/23','25/02/23','25/02/23','25/02/23','25/02/23','25/02/23','25/02/23','25/02/23','25/2/23','25/02/23' ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-          for(int x = 1 ; x<20; x++)...[
+          for(int x = 0 ; x<Users.length; x++)...[
             ListTile(
               leading: CircleAvatar(
                 child: Icon(Icons.person),
               ),
-              title: Text('Pratima Medam'),
-              subtitle: Text('app-release.apk'),
-              trailing: Text('25/10/23'),
-              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>Inbox())),
+              title: Text('${Users[x].name}'),
+              subtitle: Text('${Users[x].subtitle}'),
+              trailing: Text('${Users[x].date}'),
+              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatInbox(name: Users[x].name, number: Users[x].number, subtitle: Users[x].subtitle,))),
             ),
           ],
             Padding(

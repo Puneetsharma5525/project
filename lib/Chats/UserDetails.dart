@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../whatsapp color data/whatsappcolor.dart';
 
-class UserDetails extends StatefulWidget {
-  const UserDetails({Key? key}) : super(key: key);
-
-  @override
-  State<UserDetails> createState() => _UserDetailsState();
-}
-
-class _UserDetailsState extends State<UserDetails> {
+class Userdetails extends StatelessWidget {
+    Userdetails({Key? key,required this.name,required this.number}) : super(key: key);
+    int number;
+  String name;
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.blue[50],
       appBar: AppBar(
         backgroundColor: MainColor,
@@ -29,11 +25,11 @@ class _UserDetailsState extends State<UserDetails> {
                     child: const Icon(Icons.person,color: Colors.white,size: 55,),
                     backgroundColor: Colors.grey[400],
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Text('+91 7059 29030',style: TextStyle(fontSize: 20),),
+                    child: Text('$name',style: TextStyle(fontSize: 20),),
                   ),
-                  Text('~ VIKASH KUMAR PATEL',style: TextStyle(fontSize: 15,color: Colors.grey[700]),),
+                  Text('+91 $number',style: TextStyle(fontSize: 15,color: Colors.grey[700]),),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
@@ -64,7 +60,8 @@ class _UserDetailsState extends State<UserDetails> {
               color: Colors.white,
               child: Column(
                 children: const [
-                  ListTile(leading: Icon(Icons.notifications),title: Text('Mute notifications'),trailing: Icon(Icons.confirmation_number_sharp),),
+                  ListTile(leading: Icon(Icons.notifications),title: Text('Mute notifications'),trailing: MySwitch(),
+                  ),
                   ListTile(leading: Icon(Icons.music_note),title: Text('Custom notification'),),
                   ListTile(leading: Icon(Icons.image),title: Text('Media visibility'),),
                 ],
@@ -91,7 +88,7 @@ class _UserDetailsState extends State<UserDetails> {
                     padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                     child: Text('No group in common',style: TextStyle(fontWeight: FontWeight.w800,color: Colors.grey.shade800),),
                   ),
-                  const ListTile(leading: CircleAvatar(child: Icon(Icons.group)),title: Text('Create group with Mohit'),),
+                    ListTile(leading: CircleAvatar(child: Icon(Icons.group)),title: Text('Create group with $name'),),
                 ],
               ),
             ),
@@ -101,8 +98,8 @@ class _UserDetailsState extends State<UserDetails> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    ListTile(leading: const Icon(Icons.block,color: Colors.red,),title: Text('Block Mohit Menna',style: TextStyle(color: Colors.red.shade700),), ),
-                    ListTile(leading: const Icon(Icons.deck_outlined,color: Colors.red,),title: Text('Report Mohit Menna',style: TextStyle(color: Colors.red.shade700),), ),
+                    ListTile(leading: const Icon(Icons.block,color: Colors.red,),title: Text('Block $name',style: TextStyle(color: Colors.red.shade700),), ),
+                    ListTile(leading: const Icon(Icons.thumb_down,color: Colors.red,),title: Text('Report Mohit Menna',style: TextStyle(color: Colors.red.shade700),), ),
 
                   ],
                 ),
@@ -116,14 +113,33 @@ class _UserDetailsState extends State<UserDetails> {
 
   Column FirstWidget(Widget,String title) {
     return Column(
-             children: [
-               Padding(
-                 padding: const EdgeInsets.symmetric(vertical: 10),
-                 child: Icon(Widget,size: 26,color: MainColor,),
-               ),
-               Text(title,style: TextStyle(color: MainColor),)
-             ],
-           );
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Icon(Widget,size: 26,color: MainColor,),
+        ),
+        Text(title,style: TextStyle(color: MainColor),)
+      ],
+    );
   }
 }
+
+
+class MySwitch extends StatefulWidget {
+  const MySwitch({Key? key}) : super(key: key);
+
+  @override
+  State<MySwitch> createState() => _MySwitchState();
+}
+
+class _MySwitchState extends State<MySwitch> {
+  @override
+  Widget build(BuildContext context) {
+    return Switch(value: true,
+      onChanged: (value) {
+
+      },);
+  }
+}
+
 
